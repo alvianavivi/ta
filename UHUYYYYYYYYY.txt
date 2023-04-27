@@ -1,0 +1,5 @@
+git config --global credential.helper store
+
+git config --global credential.https://github.com.username alvianavivi
+
+git config --global credential.https://github.com.password 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
