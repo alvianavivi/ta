@@ -31,7 +31,7 @@ include 'template.php';
                     <?php
                     $sql = "SELECT akses_masuk.id_user, identitas.nama, akses_masuk.waktu_masuk FROM `akses_masuk` inner join identitas on akses_masuk.id_user = identitas.id_user ";
                     $result = mysqli_query($koneksi,$sql);
-                    $no = 0;
+                    $no = 1;
                     while($row = mysqli_fetch_row($result)){
                         $idb = $row[0];
                     ?>
@@ -39,7 +39,7 @@ include 'template.php';
                         <td><?php echo $no++ ?></td>
                         <td><?php echo $row[0] ?></td>
                         <td><?php echo $row[1] ?></td>
-                        <td><?php echo $row[2] ?></td>
+                        <td><?php $x = date('j F Y, g:i A', strtotime($row[2])); echo $x ?></td>
 
                         
                     </tr>

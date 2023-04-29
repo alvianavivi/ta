@@ -1,6 +1,24 @@
 <?php 
 include 'template.php'; 
 
+$sql = "SELECT COUNT(*) as count FROM identitas";
+$result = mysqli_query($koneksi,$sql);
+$count_user = $result->fetch_assoc();
+
+$datetimenow = date("Y-m-d H:i:s");
+$sql = "SELECT count(*) as count FROM reservasi WHERE waktu < '$datetimenow'";
+$result = mysqli_query($koneksi,$sql);
+$reservasi_selesai = $result->fetch_assoc();
+
+$sql = "SELECT count(*) as count FROM reservasi WHERE waktu > '$datetimenow'";
+$result = mysqli_query($koneksi,$sql);
+$reservasi_pending = $result->fetch_assoc();
+
+$sql = "SELECT count(*) as count FROM akses_masuk WHERE DATE(waktu_masuk) = CURDATE()";
+$result = mysqli_query($koneksi,$sql);
+$jumlah_masuk = $result->fetch_assoc();
+
+
 ?>
 
 <!-- Begin Page Content -->
@@ -22,7 +40,7 @@ include 'template.php';
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Jumlah User Terdaftar</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo $count_user['count'] ?></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -39,8 +57,8 @@ include 'template.php';
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Jumlah User Masuk</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                            Jumlah User Masuk Hari Ini</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $jumlah_masuk['count'] ?></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-fw fa-table fa-2x text-gray-300"></i>
@@ -58,7 +76,7 @@ include 'template.php';
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Jumlah Reservasi (Selesai)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $reservasi_selesai['count'] ?></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -76,7 +94,7 @@ include 'template.php';
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                             Jumlah Reservasi (Pending)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $reservasi_pending['count'] ?></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>

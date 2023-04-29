@@ -111,7 +111,7 @@ include 'template.php';
                                                                 
                                         <label for="jenis">Program Studi</label>
                                         <select name="prodi" id="prodi" class="form-control" required>
-                                            <option value="<?php $row[4] ?>" selected disabled >--Select an option--</option>;
+                                            <option value="<?php $row[4] ?>" selected disabled >--Select an option--</option>
                                             <option value="RPK">RPK</option>
                                             <option value="RKS">RKS</option>
                                             <option value="RK">RK</option>
