@@ -30,7 +30,7 @@ if(isset($_POST['submit'])){
             header("location:index.php");
         }
     } else {
-        echo '<script type="text/javascript">alert("Wrong UserName or Password");window.location=\'login.php\';</script>';
+        header("location:login.php?login_fail");
     }
 }
 
@@ -74,6 +74,13 @@ if(isset($_POST['submit'])){
             <?php if(isset($_GET['logout_success'])){?>
                 <div class="alert alert-success">
                     <strong>Sukses! </strong>Anda berhasil logout.
+                    <a href="login.php" class="close" data-dismiss="alert" aria-label="close">&times; </a>
+                </div>
+            <?php }?>
+
+            <?php if(isset($_GET['login_fail'])){?>
+                <div class="alert alert-danger">
+                    <strong>Error! </strong>Wrong UserName or Password.
                     <a href="login.php" class="close" data-dismiss="alert" aria-label="close">&times; </a>
                 </div>
             <?php }?>
