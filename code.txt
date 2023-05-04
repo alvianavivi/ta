@@ -8,3 +8,10 @@ mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DWITH_GPU=OFF -DWITH_TFLITE_GPU_DELEGATE=OFF
 make -j4
 sudo make install
+
+
+wget https://github.com/bazelbuild/bazel/releases/download/4.1.0/bazel-4.1.0-installer-linux-arm64.sh
+chmod +x bazel-4.1.0-installer-linux-arm64.sh
+sudo ./bazel-4.1.0-installer-linux-arm64.sh --user
+echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
