@@ -1,1 +1,24 @@
-sudo apt install build-essential cmake pkg-config libjpeg-dev libtiff5-dev libjasper-dev libpng-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libgtk-3-dev libatlas-base-dev gfortran libhdf5-dev libhdf5-serial-dev python3-dev python3-pip python3-numpy -y
+import cv2
+import mediapipe as mp
+
+mp_drawing = mp.solutions.drawing_utils
+mp_pose = mp.solutions.pose
+
+# Read an image and convert it to RGB
+image = cv2.imread('image.jpg')
+image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# Run Mediapipe on the image to get the pose landmarks
+with mp_pose.Pose(
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5) as pose:
+    results = pose.process(image)
+
+    # Visualize the landmarks on the image
+    image_landmarks = image.copy()
+    mp_drawing.draw_landmarks(image_landmarks, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+
+    # Display the image with landmarks
+    cv2.imshow('image', image_landmarks)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
