@@ -15,3 +15,7 @@ chmod +x bazel-4.1.0-installer-linux-arm64.sh
 sudo ./bazel-4.1.0-installer-linux-arm64.sh --user
 echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
+
+
+curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
+echo "deb [arch=armhf] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
