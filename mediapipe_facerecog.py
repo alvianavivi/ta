@@ -1,26 +1,37 @@
 import cv2
 import mediapipe as mp
-
 mp_drawing = mp.solutions.drawing_utils
-mp_pose = mp.solutions.pose
-
-# Read an image and convert it to RGB
-image = cv2.imread('image.jpg')
-image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-# Run Mediapipe on the image to get the pose landmarks
-with mp_pose.Pose(
-        min_detection_confidence=0.5,
-        min_tracking_confidence=0.5) as pose:
-    results = pose.process(image)
-
-    # Visualize the landmarks on the image
-    image_landmarks = image.copy()
-    mp_drawing.draw_landmarks(image_landmarks, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-
-    # Display the image with landmarks
-    cv2.imshow('image', image_landmarks)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+mp_face = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
+cap=cv2.VideoCapture(0)
+width=640
+height=480
 
 
+def obj_data(img):
+    image_input = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    results = mp_face.process(image_input)
+    if not results.detections:
+        print("NO FACE")
+    else:    
+         for detection in results.detections:
+             bbox = detection.location_data.relative_bounding_box
+             print(bbox)
+             x, y, w, h = int(bbox.xmin*width), int(bbox.ymin * height), int(bbox.width*width),int(bbox.height*height)
+             cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),2)
+             
+            
+                
+
+                 
+
+
+
+while True:
+    ret,frame=cap.read()
+    frame=cv2.resize(frame,(640,480))
+    obj_data(frame)
+    cv2.imshow("FRAME",frame)
+    if cv2.waitKey(1)&0xFF==27:
+        break
+cap.release()
+cv2.destroyAllWindows()
