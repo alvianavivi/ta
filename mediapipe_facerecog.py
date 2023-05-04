@@ -22,3 +22,5 @@ with mp_pose.Pose(
     cv2.imshow('image', image_landmarks)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+

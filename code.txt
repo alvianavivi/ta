@@ -1,0 +1,10 @@
+sudo apt-get update
+sudo apt-get install -y python3-dev python3-pip python3-numpy python3-opencv libatlas-base-dev libjasper-dev libqtgui4 libqt4-test libhdf5-dev libhdf5-103
+
+git clone https://github.com/google/mediapipe.git
+
+cd mediapipe
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DWITH_GPU=OFF -DWITH_TFLITE_GPU_DELEGATE=OFF
+make -j4
+sudo make install
