@@ -9,7 +9,10 @@ import numpy as np
 path = '/home/pi/FaceRecog/dataset'
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-detector = mp.solutions.face_detection.FaceDetection()
+mp_drawing = mp.solutions.drawing_utils
+mp_face_detection = mp.solutions.face_detection
+face_detector = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
+face_mesh = mp.solutions.face_mesh.FaceMesh()
 
 # function to get the images and label data
 def getImagesAndLabels(path):
@@ -20,20 +23,28 @@ def getImagesAndLabels(path):
 
     for imagePath in imagePaths:
 
-        PIL_img = Image.open(imagePath).convert('L') # convert it to grayscale
-        img_numpy = np.array(PIL_img,'uint8')
+        image = cv2.imread(imagePath)
+        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        results_detection = face_detector.process(image_rgb)
+        detections = results_detection.detections
+        if detections is not None:
+            for detection in detections:
+                mp_drawing.draw_detection(image, detection)
+            results_mesh = face_mesh.process(image_rgb)
+            multi_face_landmarks = results_mesh.multi_face_landmarks
+            if multi_face_landmarks is not None:
+                for face_landmarks in multi_face_landmarks:
+                    landmarks = []
+                    for landmark in face_landmarks.landmark:
+                        landmarks.append(landmark.x)
+                        landmarks.append(landmark.y)
+                        landmarks.append(landmark.z)
+                    landmarks = np.array(landmarks, dtype=np.float32)
+                    faceSamples.append(landmarks)
 
         id = int(os.path.split(imagePath)[-1].split(".")[1])
-        faces = detector.process(img_numpy)
-
-        for detection in faces.detections:
-            bbox = detection.location_data.relative_bounding_box
-            height, width, _ = image.shape
-            x, y, w, h = int(bbox.xmin * width), int(bbox.ymin * height), int(bbox.width * width), int(bbox.height * height)
-            
-            faceSamples.append(img_numpy[y:y+h,x:x+w])
-            ids.append(id)
-
+        ids.append(id)
+        
     return faceSamples,ids
 
 print ("\n [INFO] Training faces. It will take a few seconds. Wait ...")

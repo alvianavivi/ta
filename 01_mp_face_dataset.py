@@ -3,7 +3,7 @@ import os
 import mediapipe as mp
 import numpy as np
 
-face_detection = mp.solutions.face_detection.FaceDetection()
+face_detection = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
 landmark_detection = mp.solutions.face_mesh.FaceMesh()
 
 cap = cv2.VideoCapture(0)
