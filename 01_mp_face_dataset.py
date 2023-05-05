@@ -1,11 +1,12 @@
 import cv2
 import os
 import mediapipe as mp
+import numpy as np
 
-mp_drawing = mp.solutions.drawing_utils
-mp_face = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
-mp_mesh = mp.solutions.face_mesh.FaceMesh()
-cap=cv2.VideoCapture(0)
+face_detection = mp.solutions.face_detection.FaceDetection()
+landmark_detection = mp.solutions.face_mesh.FaceMesh()
+
+cap = cv2.VideoCapture(0)
 cap.set(3, 640) # set video width
 cap.set(4, 480) # set video height
 
@@ -18,26 +19,30 @@ count = 0
 
 while(True):
 
-    ret, img = cap.read()
-    img2 = cv2.flip(img, 1) # flip video image vertically
-    gray = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
-    faces = mp_face.process(gray)
+    success, image = cap.read()
+    if not success:
+        break
 
-    if faces.detections:
-        for detection in faces.detections:
+    # Convert image to RGB format and detect faces
+    image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    results = face_detection.process(image_rgb)
+
+
+    if results.detections:
+        for detection in results.detections:
 
             # Get the bounding box of the face
             bbox = detection.location_data.relative_bounding_box
-            height, width, _ = img.shape
+            height, width, _ = image.shape
             x, y, w, h = int(bbox.xmin * width), int(bbox.ymin * height), int(bbox.width * width), int(bbox.height * height)
 
             # Crop the face region and convert it to RGB
-            face_img = img[y:y+h, x:x+w]
+            face_img = image[y:y+h, x:x+w]
             face_img_rgb = cv2.cvtColor(face_img, cv2.COLOR_BGR2RGB)
 
             # Run face mesh on the cropped face image
-            face_results = mp_mesh.process(face_img_rgb)
-            landmarks = face_results.multi_face_landmarks     
+            #face_results = mp_mesh.process(face_img_rgb)
+            #landmarks = face_results.multi_face_landmarks     
             
             count += 1
 
