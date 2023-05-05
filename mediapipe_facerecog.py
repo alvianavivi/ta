@@ -1,5 +1,7 @@
 import cv2
 import mediapipe as mp
+
+
 mp_drawing = mp.solutions.drawing_utils
 mp_face = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
 cap=cv2.VideoCapture(0)
@@ -20,12 +22,6 @@ def obj_data(img):
              cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),2)
              
             
-                
-
-                 
-
-
-
 while True:
     ret,frame=cap.read()
     frame=cv2.resize(frame,(640,480))
