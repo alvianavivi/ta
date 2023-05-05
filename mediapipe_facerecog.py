@@ -7,6 +7,8 @@ face_detection = mp.solutions.face_detection.FaceDetection()
 landmark_detection = mp.solutions.face_mesh.FaceMesh()
 
 cap = cv2.VideoCapture(0)
+cap.set(3, 640) # set video width
+cap.set(4, 480) # set video height
 
 while(True):
     success, image = cap.read()
