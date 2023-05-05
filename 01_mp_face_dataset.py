@@ -37,6 +37,7 @@ while(True):
             height, width, _ = image.shape
             x, y, w, h = int(bbox.xmin * width), int(bbox.ymin * height), int(bbox.width * width), int(bbox.height * height)
 
+            cv2.rectangle(image, (x,y), (x+w,y+h), (255,0,0), 2)
             # Crop the face region and convert it to RGB
             face_img = image[y:y+h, x:x+w]
             
