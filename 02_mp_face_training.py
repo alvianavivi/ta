@@ -9,10 +9,11 @@ import numpy as np
 path = '/home/pi/FaceRecog/dataset'
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-mp_drawing = mp.solutions.drawing_utils
 mp_face_detection = mp.solutions.face_detection
-face_detector = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
-face_mesh = mp.solutions.face_mesh.FaceMesh()
+mp_drawing = mp.solutions.drawing_utils
+mp_face_mesh = mp.solutions.face_mesh
+face_detection = mp_face_detection.FaceDetection(min_detection_confidence=0.5)
+face_mesh = mp_face_mesh.FaceMesh()
 
 # Create list of images and corresponding labels
 images = []
