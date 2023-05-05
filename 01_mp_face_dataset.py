@@ -24,8 +24,8 @@ while(True):
         break
 
     # Convert image to RGB format and detect faces
-    img2 = cv2.flip(image, 1)
-    image_rgb = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+    image = cv2.flip(image, 1)
+    image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     results = face_detection.process(image_rgb)
 
 
