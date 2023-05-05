@@ -30,6 +30,7 @@ while(True):
 
 
     if results.detections:
+        os.mkdir('/home/pi/FaceRecog/dataset/User' + str(face_id))
         for detection in results.detections:
 
             # Get the bounding box of the face
