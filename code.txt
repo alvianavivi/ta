@@ -56,3 +56,29 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 ==================
+
+
+    for label in os.listdir(train_dir):
+    label_dict[label] = len(label_dict)
+    label_path = os.path.join(train_dir, label)
+    for img_path in os.listdir(label_path):
+        image = cv2.imread(os.path.join(label_path, img_path))
+        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        results_detection = face_detection.process(image_rgb)
+        detections = results_detection.detections
+        if detections is not None:
+            for detection in detections:
+                mp_drawing.draw_detection(image, detection)
+            results_mesh = face_mesh.process(image_rgb)
+            multi_face_landmarks = results_mesh.multi_face_landmarks
+            if multi_face_landmarks is not None:
+                for face_landmarks in multi_face_landmarks:
+                    landmarks = []
+                    for landmark in face_landmarks.landmark:
+                        landmarks.append(landmark.x)
+                        landmarks.append(landmark.y)
+                        landmarks.append(landmark.z)
+                    landmarks = np.array(landmarks, dtype=np.float32)
+                    label_id = label_dict[label]
+                    images.append(landmarks)
+                    labels.append(label_id)
