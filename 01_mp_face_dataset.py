@@ -28,7 +28,7 @@ while(True):
 
             # Get the bounding box of the face
             bbox = detection.location_data.relative_bounding_box
-            height, width, _ = img.shape
+            height, width, _ = img2.shape
             x, y, w, h = int(bbox.xmin * width), int(bbox.ymin * height), int(bbox.width * width), int(bbox.height * height)
 
             # Crop the face region and convert it to RGB
