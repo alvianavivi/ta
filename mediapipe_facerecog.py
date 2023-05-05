@@ -1,6 +1,7 @@
 import mediapipe as mp
 import cv2
 import numpy as np
+import uuid
 
 face_detection = mp.solutions.face_detection.FaceDetection()
 landmark_detection = mp.solutions.face_mesh.FaceMesh()
