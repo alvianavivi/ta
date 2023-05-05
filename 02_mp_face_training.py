@@ -8,48 +8,43 @@ import numpy as np
 # Path for face image database
 path = '/home/pi/FaceRecog/dataset'
 
+width=100
+height=100
+
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 mp_face_detection = mp.solutions.face_detection
-mp_drawing = mp.solutions.drawing_utils
-mp_face_mesh = mp.solutions.face_mesh
-
-# Create list of images and corresponding labels
-face_encodings = []
-labels = []
+face_detector = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
+face_mesh = mp.solutions.face_mesh.FaceMesh()
 
 # function to get the images and label data
-def getImagesAndLabels(train_dir):
+def getImagesAndLabels(path):
 
-    for label in os.listdir(train_dir):
-        label_path = os.path.join(train_dir, label)
-        for img_path in os.listdir(label_path):
-            image = cv2.imread(os.path.join(label_path, img_path))
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    imagePaths = [os.path.join(path,f) for f in os.listdir(path)]     
+    faceSamples=[]
+    ids = []
 
-            with mp_face_detection.FaceDetection(min_detection_confidence=0.5) as face_detection:
-                results_detection = face_detection.process(gray)
-                detections = results_detection.detections
+    for imagePath in imagePaths:
 
-                if detections is not None:
-                    for detection in detections:
-                        bbox = mp_drawing._normalized_to_absolute_bounding_box(detection.location_data.relative_bounding_box, image.shape[1], image.shape[0])
-                        # Crop the face region
-                        face = gray[int(bbox[1]):int(bbox[1]+bbox[3]), int(bbox[0]):int(bbox[0]+bbox[2])]
-                        # Resize the face image to a fixed size (e.g. 100x100)
-                        face = cv2.resize(face, (100, 100), interpolation=cv2.INTER_LINEAR)
-                        # Extract the facial landmarks using the Face Mesh model in MediaPipe
-                        with mp_face_mesh.FaceMesh(max_num_faces=1) as face_mesh:
-                            results_mesh = face_mesh.process(face)
-                            face_landmarks = results_mesh.multi_face_landmarks[0]
-                        # Convert the landmarks to a numpy array and add it to the list of face encodings
-                        face_encoding = np.array([(landmark.x, landmark.y) for landmark in face_landmarks.landmark]).flatten()
-                        face_encodings.append(face_encoding)
-                        # Add the label for this face image (e.g. name of the person in the image)
-                        labels.append(img_path.split('.')[0])
-        
-    return face_encodings, labels
+        PIL_img = Image.open(imagePath).convert('L') # convert it to grayscale
+        img_numpy = np.array(PIL_img,'uint8')
 
-print
+        #image = cv2.imread(imagePath)
+        #image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        results_detection = face_detector.process(image_numpy)
+        detections = results_detection.detections
+
+        id = int(os.path.split(imagePath)[-1].split(".")[1])
+        #faces = detector.process(img_numpy)
+
+        for detection in faces.detections:
+            bbox = detection.location_data.relative_bounding_box
+            x, y, w, h = int(bbox.xmin * width), int(bbox.ymin * height), int(bbox.width * width), int(bbox.height * height)
+            
+            faceSamples.append(img_numpy[y:y+h,x:x+w])
+            ids.append(id)
+
+    return faceSamples,ids
+
 print ("\n [INFO] Training faces. It will take a few seconds. Wait ...")
 faces,ids = getImagesAndLabels(path)
 recognizer.train(faces, np.array(ids))

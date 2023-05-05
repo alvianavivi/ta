@@ -30,9 +30,9 @@ while(True):
 
 
     if results.detections:
-        dir_path = '/home/pi/FaceRecog/dataset/User' + str(face_id)
-        if not os.path.exists(dir_path):
-            os.mkdir(dir_path)
+        #dir_path = '/home/pi/FaceRecog/dataset/User' + str(face_id)
+        #if not os.path.exists(dir_path):
+        #    os.mkdir(dir_path)
         for detection in results.detections:
 
             # Get the bounding box of the face
@@ -44,7 +44,7 @@ while(True):
             # Crop the face region and convert it to RGB
             face_img = image[y:y+h, x:x+w]
             
-
+            face_img = cv2.resize(face_img, (100, 100), interpolation=cv2.INTER_LINEAR)
             # Run face mesh on the cropped face image
             #face_results = mp_mesh.process(face_img_rgb)
             #landmarks = face_results.multi_face_landmarks     
@@ -52,7 +52,7 @@ while(True):
             count += 1
 
             # Save the captured image into the datasets folder
-            cv2.imwrite('/home/pi/FaceRecog/dataset/User' + str(face_id) + '/' + str(count) + ".jpg", face_img)
+            cv2.imwrite('/home/pi/FaceRecog/dataset/User' + str(face_id)  + str(count) + ".jpg", face_img)
 
             cv2.imshow('image', image)
 
