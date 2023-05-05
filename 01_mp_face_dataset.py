@@ -30,7 +30,9 @@ while(True):
 
 
     if results.detections:
-        os.mkdir('/home/pi/FaceRecog/dataset/User' + str(face_id))
+        dir_path = '/home/pi/FaceRecog/dataset/User' + str(face_id)
+        if not os.path.exists(dir_path):
+            os.mkdir(dir_path)
         for detection in results.detections:
 
             # Get the bounding box of the face
