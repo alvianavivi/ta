@@ -40,8 +40,8 @@ while(True):
             # Draw bounding box around the face
             cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
-    # Display the output video
-    cv2.imshow('image', image)
+            # Display the output video
+            cv2.imshow('image', image)
     if cv2.waitKey(1) == ord('q'):
         break
 
