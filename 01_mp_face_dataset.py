@@ -48,7 +48,7 @@ while(True):
             count += 1
 
             # Save the captured image into the datasets folder
-            cv2.imwrite('/home/pi/FaceRecog/dataset/User.' + str(face_id) + '.' + str(count) + ".jpg", face_img_rgb)
+            cv2.imwrite('/home/pi/FaceRecog/dataset/User.' + str(face_id) + '.' + str(count) + ".jpg", face_img)
 
             cv2.imshow('image', image)
 
