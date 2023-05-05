@@ -6,8 +6,8 @@ mp_drawing = mp.solutions.drawing_utils
 mp_face = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
 mp_mesh = mp.solutions.face_mesh.FaceMesh()
 cap=cv2.VideoCapture(0)
-width=640
-height=480
+cap.set(3, 640) # set video width
+cap.set(4, 480) # set video height
 
 # For each person, enter one numeric face id
 face_id = input('\n enter user id end press <return> ==>  ')
