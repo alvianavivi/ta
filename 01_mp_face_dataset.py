@@ -39,7 +39,7 @@ while(True):
 
             # Crop the face region and convert it to RGB
             face_img = image[y:y+h, x:x+w]
-            face_img_rgb = cv2.cvtColor(face_img, cv2.COLOR_BGR2RGB)
+            
 
             # Run face mesh on the cropped face image
             #face_results = mp_mesh.process(face_img_rgb)
