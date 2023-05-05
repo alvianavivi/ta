@@ -23,7 +23,7 @@ while(True):
     gray = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
     faces = mp_face.process(gray)
 
-    if results.detections:
+    if faces.detections:
         for detection in faces.detections:
 
             # Get the bounding box of the face
