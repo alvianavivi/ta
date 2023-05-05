@@ -13,7 +13,7 @@ cap.set(4, 480) # set video height
 # For each person, enter one numeric face id
 face_id = input('\n enter user id end press <return> ==>  ')
 
-print("\n [INFO] Initializing face capture. Look the camera and wait ...")
+print("\n [INFOO] Initializing face capture. Look the camera and wait ...")
 # Initialize individual sampling face count
 count = 0
 
