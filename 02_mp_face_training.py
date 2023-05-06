@@ -27,6 +27,9 @@ def getImagesAndLabels(path):
         image = cv2.imread(imagePath)
         results_detection = face_detector.process(image)
 
+        if not results_detection.detections:
+            continue
+
         for detection in results_detection.detections:
             bbox = detection.location_data.relative_bounding_box
             x, y, w, h = int(bbox.xmin * width), int(bbox.ymin * height), int(bbox.width * width), int(bbox.height * height) 

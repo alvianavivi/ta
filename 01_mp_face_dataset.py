@@ -3,11 +3,11 @@ import os
 import mediapipe as mp
 import numpy as np
 
-face_detection = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
-
 cap = cv2.VideoCapture(0)
 cap.set(3, 640) # set video width
 cap.set(4, 480) # set video height
+
+face_detection = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
 
 # For each person, enter one numeric face id
 face_id = input('\n enter user id end press <return> ==>  ')
