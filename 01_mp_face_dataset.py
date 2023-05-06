@@ -4,7 +4,6 @@ import mediapipe as mp
 import numpy as np
 
 face_detection = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
-landmark_detection = mp.solutions.face_mesh.FaceMesh()
 
 cap = cv2.VideoCapture(0)
 cap.set(3, 640) # set video width
@@ -28,11 +27,7 @@ while(True):
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     results = face_detection.process(image_rgb)
 
-
     if results.detections:
-        #dir_path = '/home/pi/FaceRecog/dataset/User' + str(face_id)
-        #if not os.path.exists(dir_path):
-        #    os.mkdir(dir_path)
         for detection in results.detections:
 
             # Get the bounding box of the face
@@ -41,18 +36,15 @@ while(True):
             x, y, w, h = int(bbox.xmin * width), int(bbox.ymin * height), int(bbox.width * width), int(bbox.height * height)
 
             cv2.rectangle(image, (x,y), (x+w,y+h), (255,0,0), 2)
+            
             # Crop the face region and convert it to RGB
-            face_img = image[y:y+h, x:x+w]
-            
-            face_img = cv2.resize(face_img, (100, 100), interpolation=cv2.INTER_LINEAR)
-            # Run face mesh on the cropped face image
-            #face_results = mp_mesh.process(face_img_rgb)
-            #landmarks = face_results.multi_face_landmarks     
-            
+            face_img = image[y:y+h, x:x+w]           
+            face_img = cv2.resize(face_img, (300, 300), interpolation=cv2.INTER_LINEAR)
+               
             count += 1
 
             # Save the captured image into the datasets folder
-            cv2.imwrite('/home/pi/FaceRecog/dataset/User' + str(face_id) + "." + str(count) + ".jpg", face_img)
+            cv2.imwrite('/home/pi/FaceRecog/dataset/User.' + str(face_id) + "." + str(count) + ".jpg", face_img)
 
             cv2.imshow('image', image)
 
