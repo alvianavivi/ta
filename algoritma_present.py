@@ -133,7 +133,7 @@ def present_dekripsi(kunci,pesan):
     return decrypted
 
 
-binascii.hexlify(encrypted_1).decode('utf8')
+#binascii.hexlify(encrypted_1).decode('utf8')
     
 
 import math
