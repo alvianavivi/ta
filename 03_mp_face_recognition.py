@@ -5,8 +5,6 @@ import mediapipe as mp
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read('/home/pi/FaceRecog/trainer/trainer.yml')
-face_detection = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
-
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 #iniciate id counter
@@ -19,6 +17,9 @@ names = ['None', 'zul', 'iwan', 'yoshi']
 cam = cv2.VideoCapture(0)
 cam.set(3, 640) # set video widht
 cam.set(4, 480) # set video height
+
+face_detection = mp.solutions.face_detection.FaceDetection(model_selection=1,min_detection_confidence=0.5)
+
 
 while True:
 
@@ -41,7 +42,7 @@ while True:
 
             cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
 
-            face_img = image[y:y+h, x:x+w]
+            face_img = img[y:y+h, x:x+w]
             face_img = cv2.cvtColor(face_img, cv2.COLOR_BGR2GRAY)
 
             id, confidence = recognizer.predict(face_img)
