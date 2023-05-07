@@ -274,12 +274,12 @@ class InputID(tk.Toplevel):
         
         d = Label(self, text = "Prodi").grid(row = 4,column = 0)
         options_prodi = ['RKS', 'RPK', 'RK']
-        faceprodi= tk.Combobox(self, values=options_prodi)
+        faceprodi= ttk.Combobox(self, values=options_prodi)
         faceprodi.grid(row = 4,column = 1)
         
         e = Label(self, text = "Jenis Kelamin").grid(row = 5,column = 0)
         options_jk = ['L', 'P']
-        facejk = tk.Combobox(self, values=options_jk)
+        facejk = ttk.Combobox(self, values=options_jk)
         facejk.grid(row = 5,column = 1)
         
         f = Label(self, text = "Nomor Telepon").grid(row = 6,column = 0)
@@ -296,7 +296,7 @@ class InputID(tk.Toplevel):
         
         i = Label(self, text = "Role").grid(row = 9,column = 0)
         options_jk = ['admin', 'owner', 'user']
-        facerole = Entry(self)
+        facerole = ttk.Combobox(self, values=options_prodi)
         facerole.grid(row = 9,column = 1)
         #lambda: [self.open_window(), self.servo()]).pack(expand=True)
         
