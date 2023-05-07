@@ -41,39 +41,12 @@ class App(tk.Tk):
         self.title('Aplikasi Ruang Workshop')
         self.configure(bg='light blue')
 
-        a = Label(self, text = "").pack(pady=80)
-        a = Label(self, text = "INPUT KUNCI").pack(pady=10)
-        input_kunci = Entry(self)
-        input_kunci.pack(pady=2)
-
-        #kunci = input_kunci.get()
-
-        kunci = "memoryofcupawwww"
-        file_cipher="cipher_trainer.yml"
-
         # place a button on the root window
         ttk.Button(self,
                 text='START', 
-                command=lambda: [self.present_dekripsifile(kunci, file_cipher), self.open_window(), self.servo(), self.iconify()]).pack(expand=True)     
+                command=lambda: [self.open_window(), self.servo(), self.iconify()]).pack(expand=True)     
                 
         #self.destroy()                 
-                
-
-    def present_dekripsifile(self, kunci, namafile):
-        f = open(namafile, 'rb')
-        data_all = f.readlines()
-        f.close()
-        f = open(namafile.replace("cipher_",""), 'wb')
-        for x in data_all:
-            x=x.decode('utf-8')
-            x=x.strip()
-            h_plain = present.present_dekripsi(kunci,x)
-            h_plain=bytes.fromhex(h_plain)
-            f.write(h_plain)
-            #f.write("\n".encode('utf-8'))
-        f.close()
-        os.remove(namafile)
-        print("Dekripsi File Selesai")
             
     def open_window(self):
         window = FaceRecog(self)
@@ -396,9 +369,7 @@ class InputWajah(tk.Toplevel):
         self.geometry('300x200')
         self.title('Input Wajah')
         self.configure(bg='pink')
-        
-        import cv2
-        import os
+    
 
         cap = cv2.VideoCapture(0)
         cap.set(3, 640) # set video width
@@ -472,8 +443,6 @@ class TombolTrain(tk.Toplevel):
         self.geometry("%dx%d" % (width, height))
         self.title('Aplikasi Ruang Workshop')
         self.configure(bg='pink')
-        kunci = "memoryofcupawwww"
-        file_plain="trainer.yml"
 
         # place a button on the root window
         #c = Label(self, text = "Selesai Registrasi").grid(row = 2,column = 2)
@@ -483,7 +452,7 @@ class TombolTrain(tk.Toplevel):
 
         ttk.Button(self,
                 text='Tutup Aplikasi',
-                command=lambda: [self.present_enkripsifile(kunci, file_plain), self.destroy()]).pack(expand=True)   
+                command=lambda: [self.destroy()]).pack(expand=True)   
                 
     def open_window(self):
         window = TrainWajah(self)
@@ -493,20 +462,6 @@ class TombolTrain(tk.Toplevel):
         window = FaceRecog(self)
         window.grab_set()
         
-
-    def present_enkripsifile(self, kunci, namafile):
-        f = open(namafile, 'rb')
-        data_all = f.readlines()
-        f.close()
-        f = open("cipher_"+namafile, 'w')
-        for x in data_all:
-            x=binascii.hexlify(x).decode('utf-8')
-            h_cipher = present.present_enkripsi(kunci,x)
-            f.write(h_cipher)
-            f.write("\n")
-        f.close()
-        os.remove(namafile)
-        print("Enkripsi File Selesai")
         
 class TrainWajah(tk.Toplevel):
     def __init__(self, parent):
