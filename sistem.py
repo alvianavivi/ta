@@ -57,7 +57,7 @@ class App(tk.Tk):
         # place a button on the root window
         ttk.Button(self,
                 text='START', 
-                command=lambda: [self.open_window(), self.servo(), self.iconify()]).pack(expand=True)     
+                command=lambda: [self.present_dekripsifile(kunci, file_cipher), self.open_window(), self.servo(), self.iconify()]).pack(expand=True)     
                 
         #self.destroy()                 
                 
@@ -73,7 +73,7 @@ class App(tk.Tk):
             h_plain = present.present_dekripsi(kunci,x)
             h_plain=bytes.fromhex(h_plain)
             f.write(h_plain)
-            f.write("\n".encode('utf-8'))
+            #f.write("\n".encode('utf-8'))
         f.close()
         os.remove(namafile)
         print("Dekripsi File Selesai")
