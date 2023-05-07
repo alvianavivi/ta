@@ -185,7 +185,6 @@ class FaceRecog(tk.Toplevel):
         cam.release()
         cv2.destroyAllWindows()
     
-    
     def open_window(self):
         window = MenuAdmin(self)
         window.grab_set()
@@ -209,7 +208,7 @@ class FaceRecog(tk.Toplevel):
 
         mycursor = mydb.cursor()
 
-        sql = "INSERT INTO aksesmasuk values ('"+ id_user +"','"+ waktumasuk +"')"
+        sql = "INSERT INTO akses_masuk values ('"+ id_user +"','"+ waktumasuk +"')"
         mycursor.execute(sql)
 
         mycursor.execute("commit")
@@ -227,40 +226,15 @@ class MenuAdmin(tk.Toplevel):
 
         ttk.Button(self,
                 text='Login',
-                command=lambda: [self.sendtoMySQL(), self.servo(), self.open_window2()]).pack(expand=True)
+                command=lambda: [self.open_window2()]).pack(expand=True)
         ttk.Button(self,
                 text='Register',
                 command=lambda: [self.open_window(), self.iconify()]).pack(expand=True)
-        
-       
-    def servo(self):
-            p.ChangeDutyCycle(1.5)
-            time.sleep(2)
-            p.ChangeDutyCycle(12.5)
-            time.sleep(2)
             
     def open_window2(self):
         window = FaceRecog(self)
         window.grab_set()
-                   
-    def sendtoMySQL(self):
-        id_user = str(id)
-        waktumasuk = str(datetime.datetime.now())     
-        
-        mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="password",
-        database="workshop"
-        )
-
-        mycursor = mydb.cursor()
-
-        sql = "INSERT INTO aksesmasuk values ('"+ id_user +"','"+ waktumasuk +"')"
-        mycursor.execute(sql)
-
-        mycursor.execute("commit")
-        
+                         
     def open_window(self):
         window = InputID(self)
         window.grab_set()
@@ -447,11 +421,11 @@ class TombolTrain(tk.Toplevel):
         # place a button on the root window
         #c = Label(self, text = "Selesai Registrasi").grid(row = 2,column = 2)
         ttk.Button(self,
-                text='Selesai',
+                text='Selesaikan Registrasi',
                 command=lambda: [self.open_window(), self.open_window(), self.iconify()]).pack(expand=True)
 
         ttk.Button(self,
-                text='Tutup Aplikasi',
+                text='Tutup Aplikasi / Cancel',
                 command=lambda: [self.destroy()]).pack(expand=True)   
                 
     def open_window(self):
