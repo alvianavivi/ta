@@ -184,6 +184,8 @@ class FaceRecog(tk.Toplevel):
         print("\n [INFO] Exiting Program and cleanup stuff")
         cam.release()
         cv2.destroyAllWindows()
+
+        self.destroy()
     
     def open_window(self):
         window = MenuAdmin(self)
@@ -295,13 +297,16 @@ class InputID(tk.Toplevel):
         facepw.grid(row = 8,column = 1)
         
         i = Label(self, text = "Role").grid(row = 9,column = 0)
-        options_jk = ['admin', 'owner', 'user']
-        facerole = ttk.Combobox(self, values=options_prodi)
+        options_role = ['admin', 'owner', 'user']
+        facerole = ttk.Combobox(self, values=options_role)
         facerole.grid(row = 9,column = 1)
         #lambda: [self.open_window(), self.servo()]).pack(expand=True)
         
         tk.Button(self,text='Submit', command= lambda: [self.open_window(), self.sendtoMySQL(), self.iconify()]).grid(row = 10,column = 1)
   
+        self.destroy()
+
+
     def open_window(self):
         window = InputWajah(self)
         window.grab_set()
@@ -319,8 +324,7 @@ class InputID(tk.Toplevel):
         #print(face_name)
         
         hash_pw = hashlib.md5(face_pw.encode("utf-8")).hexdigest() 
-     
-        
+ 
         mydb = mysql.connector.connect(
         host="localhost",
         user="root",
@@ -402,6 +406,8 @@ class InputWajah(tk.Toplevel):
         print("\n [INFO] Exiting Program and cleanup stuff")
         cap.release()
         cv2.destroyAllWindows()
+
+        self.destroy()
         
     def open_window(self):
         window = TombolTrain(self)
@@ -428,6 +434,9 @@ class TombolTrain(tk.Toplevel):
                 text='Tutup Aplikasi / Cancel',
                 command=lambda: [self.destroy()]).pack(expand=True)   
                 
+        self.destroy()
+
+        
     def open_window(self):
         window = TrainWajah(self)
         window.grab_set()
