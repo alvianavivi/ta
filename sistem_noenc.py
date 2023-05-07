@@ -164,21 +164,21 @@ class FaceRecog(tk.Toplevel):
                     cv2.putText(img, str(nama), (x+5,y-5), font, 1, (255,255,255), 2)
                     #cv2.putText(img, str(confidence), (x+5,y+h-5), font, 1, (255,255,0), 1)
                                     
-            cv2.imshow('Scan Wajah',img) 
-            print(status)
-            cv2.waitKey(5000) #& 0xff # Press 'ESC' for exiting video
-            if (role == "admin"):
-                print(role)
-                self.open_window()
-                break
-            elif (role == "Unknown"):
-                print(role)
-                messagebox.showinfo("showinfo", "Anda Bukan Admin!")
-                break
-            elif(status == 1):
-                print(id)
-                self.servo()
-                self.sendtoMySQL()
+                cv2.imshow('Scan Wajah',img) 
+                print(status)
+                cv2.waitKey(5000) #& 0xff # Press 'ESC' for exiting video
+                if (role == "admin"):
+                    print(role)
+                    self.open_window()
+                    break
+                elif (role == "Unknown"):
+                    print(role)
+                    messagebox.showinfo("showinfo", "Anda Bukan Admin!")
+                    break
+                elif(status == 1):
+                    print(id)
+                    self.servo()
+                    self.sendtoMySQL()
                 
         # Do a bit of cleanup
         print("\n [INFO] Exiting Program and cleanup stuff")
