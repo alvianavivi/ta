@@ -173,13 +173,16 @@ class FaceRecog(tk.Toplevel):
                     break
                 elif (role == "Unknown"):
                     print(role)
-                    messagebox.showinfo("showinfo", "Anda Bukan Admin!")
+                    messagebox.showinfo("showinfo", "Anda Bukan Admin!", parent=None)
+                    self.deiconify()
                     break
                 elif(status == 1):
                     print(id)
                     self.servo()
                     self.sendtoMySQL()
-                    messagebox.showinfo("showinfo", "Selamat Datang dan Masuk!")
+                    messagebox.showinfo("showinfo", "Selamat Datang dan Masuk!", parent=None)
+                    self.withdraw()
+                    self.deiconify()
                     break
         
         # Do a bit of cleanup
@@ -421,7 +424,7 @@ class TombolTrain(tk.Toplevel):
         height= self.winfo_screenheight()
         #setting tkinter window size
         self.geometry("%dx%d" % (width, height))
-        self.title('Aplikasi Ruang Workshop')
+        self.title('Are U Sure?')
         self.configure(bg='pink')
 
         # place a button on the root window
