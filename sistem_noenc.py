@@ -137,7 +137,7 @@ class FaceRecog(tk.Toplevel):
 
                     mycursor1 = mydb.cursor()
                     sql2 = "select id_user from reservasi where id_user = %s AND waktu > %s"         
-                    mycursor1.execute(sql2,[(id,formatted_date)])
+                    mycursor1.execute(sql2,[(id),(formatted_date)])
                     id_list = [x[0] for x in mycursor1.fetchall()]
 
                     print("Nilai id reservasi = " + str(id_list))
