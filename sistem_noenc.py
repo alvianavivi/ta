@@ -174,17 +174,18 @@ class FaceRecog(tk.Toplevel):
                 elif (role == "Unknown"):
                     print(role)
                     messagebox.showinfo("showinfo", "Anda Bukan Admin!", parent=None)
-                    self.deiconify()
+                    self.open_app()
+                    self.withdraw()
                     break
                 elif(status == 1):
                     print(id)
                     self.servo()
                     self.sendtoMySQL()
                     messagebox.showinfo("showinfo", "Selamat Datang dan Masuk!", parent=None)
-                    self.deiconify()
+                    self.open_app()
+                    self.withdraw()
                     break
-                
-        self.wait_window()        
+                       
         # Do a bit of cleanup
         print("\n [INFO] Exiting Program and cleanup stuff")
         cam.release()
@@ -218,6 +219,11 @@ class FaceRecog(tk.Toplevel):
         mycursor.execute(sql)
 
         mycursor.execute("commit")
+
+    def open_app(self):
+        window = App()
+        window.grab_set()
+        self.withdraw()    
                 
 class MenuAdmin(tk.Toplevel):
     def __init__(self, parent):
