@@ -44,9 +44,7 @@ class App(tk.Tk):
         # place a button on the root window
         ttk.Button(self,
                 text='START', 
-                command=lambda: [self.open_window(), self.servo(), self.iconify()]).pack(expand=True)     
-                
-        #self.destroy()                 
+                command=lambda: [self.open_window(), self.servo(), self.iconify()]).pack(expand=True)                  
             
     def open_window(self):
         window = FaceRecog(self)
@@ -184,10 +182,9 @@ class FaceRecog(tk.Toplevel):
         print("\n [INFO] Exiting Program and cleanup stuff")
         cam.release()
         cv2.destroyAllWindows()
-
-        self.destroy()
     
     def open_window(self):
+        self.destroy()
         window = MenuAdmin(self)
         window.grab_set()
 
@@ -198,6 +195,7 @@ class FaceRecog(tk.Toplevel):
         time.sleep(2)
         
     def sendtoMySQL(self):
+        self.destroy()
         id_user = str(id)
         waktumasuk = str(datetime.datetime.now())     
         
@@ -303,9 +301,6 @@ class InputID(tk.Toplevel):
         #lambda: [self.open_window(), self.servo()]).pack(expand=True)
         
         tk.Button(self,text='Submit', command= lambda: [self.open_window(), self.sendtoMySQL(), self.iconify()]).grid(row = 10,column = 1)
-  
-        self.destroy()
-
 
     def open_window(self):
         window = InputWajah(self)
@@ -334,11 +329,10 @@ class InputID(tk.Toplevel):
 
         mycursor = mydb.cursor()
 
-        sql = "INSERT INTO identitas (id_user, nama, username, npm_nip, prodi, jk, no_telp, pass, role) VALUES (%s, %s, %s, %s, %s, %s)"        
-        val = (face_id, face_name, face_uname, face_npm, face_prodi, face_jk, face_notelp, hash_pw, face_role)
-        mycursor.execute(sql, val)
-        
-        mydb.commit()
+        sql = "INSERT INTO identitas values ('"+ face_id +"','"+ face_name +"','"+ face_uname +"','"+ face_npm +"','"+ face_prodi +"','"+ face_jk +"','"+ face_notelp +"','"+ hash_pw +"','"+ face_role +"')"
+        mycursor.execute(sql)
+
+        mycursor.execute("commit")
 
 class InputWajah(tk.Toplevel):
     def __init__(self, parent):
@@ -407,9 +401,9 @@ class InputWajah(tk.Toplevel):
         cap.release()
         cv2.destroyAllWindows()
 
-        self.destroy()
         
     def open_window(self):
+        self.destroy()
         window = TombolTrain(self)
         window.grab_set()
         
@@ -433,15 +427,14 @@ class TombolTrain(tk.Toplevel):
         ttk.Button(self,
                 text='Tutup Aplikasi / Cancel',
                 command=lambda: [self.destroy()]).pack(expand=True)   
-                
-        self.destroy()
-
         
     def open_window(self):
+        self.destroy()
         window = TrainWajah(self)
         window.grab_set()
         
     def open_window(self):
+        self.destroy()
         window = FaceRecog(self)
         window.grab_set()
         
@@ -461,9 +454,7 @@ class TrainWajah(tk.Toplevel):
         path = '/home/pi/FaceRecog/dataset'
 
         recognizer = cv2.face.LBPHFaceRecognizer_create()
-        mp_face_detection = mp.solutions.face_detection
         face_detector = mp.solutions.face_detection.FaceDetection()
-        mp_drawing = mp.solutions.drawing_utils
 
         # function to get the images and label data
         def getImagesAndLabels(path):
@@ -501,7 +492,7 @@ class TrainWajah(tk.Toplevel):
 
         # Print the numer of faces trained and end program
         print("\n [INFO] {0} faces trained. Exiting Program".format(len(np.unique(ids))))
-        
+
 
 if __name__ == "__main__":
     app = App ()
