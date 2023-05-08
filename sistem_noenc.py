@@ -499,6 +499,7 @@ class TrainWajah(tk.Toplevel):
         # Print the numer of faces trained and end program
         print("\n [INFO] {0} faces trained. Exiting Program".format(len(np.unique(ids))))
 
+        self.destroy()
 
 if __name__ == "__main__":
     app = App ()
