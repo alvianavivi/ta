@@ -99,7 +99,6 @@ class FaceRecog(tk.Toplevel):
             results = face_detection.process(image_rgb)
 
             if results.detections:
-                cv2.imshow('Scan Wajah',img) 
                 for detection in results.detections:
                     # Get the bounding box of the face
                     bbox = detection.location_data.relative_bounding_box
@@ -164,12 +163,13 @@ class FaceRecog(tk.Toplevel):
                     cv2.putText(img, str(nama), (x+5,y-5), font, 1, (255,255,255), 2)
                     #cv2.putText(img, str(confidence), (x+5,y+h-5), font, 1, (255,255,0), 1)
                                     
-                #cv2.imshow('Scan Wajah',img) 
+                cv2.imshow('Scan Wajah',img) 
                 print(status)
                 cv2.waitKey(5000) #& 0xff # Press 'ESC' for exiting video
                 if (role == "admin"):
                     print(role)
                     self.open_window()
+                    self.withdraw()
                     break
                 elif (role == "Unknown"):
                     print(role)
@@ -179,8 +179,8 @@ class FaceRecog(tk.Toplevel):
                     print(id)
                     self.servo()
                     self.sendtoMySQL()
-                self.withdraw()
-                
+                    self.withdraw()
+        
         # Do a bit of cleanup
         print("\n [INFO] Exiting Program and cleanup stuff")
         cam.release()
@@ -432,8 +432,8 @@ class TombolTrain(tk.Toplevel):
                 command=lambda: [self.open_window(), self.open_window2()]).pack(expand=True)
 
         ttk.Button(self,
-                text='Tutup Aplikasi / Cancel',
-                command=lambda: [self.destroy()]).pack(expand=True)   
+                text='Cancel',
+                command=lambda: [self.open_window3()]).pack(expand=True)   
         
     def open_window(self):
         window = TrainWajah(self)
@@ -442,6 +442,11 @@ class TombolTrain(tk.Toplevel):
         
     def open_window2(self):
         window = FaceRecog(self)
+        window.grab_set()
+        self.withdraw()
+
+    def open_window3(self):
+        window = MenuAdmin(self)
         window.grab_set()
         self.withdraw()
         
