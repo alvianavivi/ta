@@ -181,10 +181,10 @@ class FaceRecog(tk.Toplevel):
                     self.servo()
                     self.sendtoMySQL()
                     messagebox.showinfo("showinfo", "Selamat Datang dan Masuk!", parent=None)
-                    self.withdraw()
                     self.deiconify()
                     break
-        
+                
+        self.wait_window()        
         # Do a bit of cleanup
         print("\n [INFO] Exiting Program and cleanup stuff")
         cam.release()
