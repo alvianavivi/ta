@@ -44,7 +44,7 @@ class App(tk.Tk):
         # place a button on the root window
         ttk.Button(self,
                 text='START', 
-                command=lambda: [self.open_window(), self.servo(), self.iconify()]).pack(expand=True)                  
+                command=lambda: [self.open_window(), self.servo(), self.withdraw()]).pack(expand=True)                  
             
     def open_window(self):
         window = FaceRecog(self)
