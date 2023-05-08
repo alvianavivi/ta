@@ -99,6 +99,7 @@ class FaceRecog(tk.Toplevel):
             results = face_detection.process(image_rgb)
 
             if results.detections:
+                cv2.imshow('Scan Wajah',img) 
                 for detection in results.detections:
                     # Get the bounding box of the face
                     bbox = detection.location_data.relative_bounding_box
@@ -163,7 +164,7 @@ class FaceRecog(tk.Toplevel):
                     cv2.putText(img, str(nama), (x+5,y-5), font, 1, (255,255,255), 2)
                     #cv2.putText(img, str(confidence), (x+5,y+h-5), font, 1, (255,255,0), 1)
                                     
-                cv2.imshow('Scan Wajah',img) 
+                #cv2.imshow('Scan Wajah',img) 
                 print(status)
                 cv2.waitKey(5000) #& 0xff # Press 'ESC' for exiting video
                 if (role == "admin"):
