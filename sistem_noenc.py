@@ -179,7 +179,6 @@ class FaceRecog(tk.Toplevel):
                     print(id)
                     self.servo()
                     self.sendtoMySQL()
-                    self.withdraw()
         
         # Do a bit of cleanup
         print("\n [INFO] Exiting Program and cleanup stuff")
@@ -210,7 +209,7 @@ class FaceRecog(tk.Toplevel):
 
         mycursor = mydb.cursor()
 
-        sql = "INSERT INTO akses_masuk values ('"+ id_user +"','"+ waktumasuk +"')"
+        sql = "INSERT INTO akses_masuk (id_user, waktu) values ('"+ id_user +"','"+ waktumasuk +"')"
         mycursor.execute(sql)
 
         mycursor.execute("commit")
