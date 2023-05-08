@@ -174,16 +174,16 @@ class FaceRecog(tk.Toplevel):
                 elif (role == "Unknown"):
                     print(role)
                     messagebox.showinfo("showinfo", "Anda Bukan Admin!", parent=None)
-                    self.open_app()
                     self.withdraw()
+                    self.open_app()
                     break
                 elif(status == 1):
                     print(id)
                     self.servo()
                     self.sendtoMySQL()
                     messagebox.showinfo("showinfo", "Selamat Datang dan Masuk!", parent=None)
-                    self.open_app()
                     self.withdraw()
+                    self.open_app()
                     break
                        
         # Do a bit of cleanup
