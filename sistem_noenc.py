@@ -215,8 +215,6 @@ class FaceRecog(tk.Toplevel):
         mycursor.execute(sql)
 
         mycursor.execute("commit")
-        
-        self.withdraw()
                 
 class MenuAdmin(tk.Toplevel):
     def __init__(self, parent):
