@@ -179,6 +179,8 @@ class FaceRecog(tk.Toplevel):
                     print(id)
                     self.servo()
                     self.sendtoMySQL()
+                    messagebox.showinfo("showinfo", "Selamat Datang dan Masuk!")
+                    break
         
         # Do a bit of cleanup
         print("\n [INFO] Exiting Program and cleanup stuff")
