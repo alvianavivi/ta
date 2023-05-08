@@ -44,11 +44,12 @@ class App(tk.Tk):
         # place a button on the root window
         ttk.Button(self,
                 text='START', 
-                command=lambda: [self.open_window(), self.servo(), self.iconify()]).pack(expand=True)                  
+                command=lambda: [self.open_window(), self.servo()]).pack(expand=True)                  
             
     def open_window(self):
         window = FaceRecog(self)
         window.grab_set()
+        self.withdraw()
 
     def servo(self):
         p.ChangeDutyCycle(12.5)
@@ -177,6 +178,7 @@ class FaceRecog(tk.Toplevel):
                     print(id)
                     self.servo()
                     self.sendtoMySQL()
+                self.withdraw()
                 
         # Do a bit of cleanup
         print("\n [INFO] Exiting Program and cleanup stuff")
@@ -184,9 +186,9 @@ class FaceRecog(tk.Toplevel):
         cv2.destroyAllWindows()
     
     def open_window(self):
-        self.destroy()
         window = MenuAdmin(self)
         window.grab_set()
+        self.withdraw()
 
     def servo(self):
         p.ChangeDutyCycle(1.5)
@@ -195,7 +197,6 @@ class FaceRecog(tk.Toplevel):
         time.sleep(2)
         
     def sendtoMySQL(self):
-        self.destroy()
         id_user = str(id)
         waktumasuk = str(datetime.datetime.now())     
         
@@ -212,6 +213,8 @@ class FaceRecog(tk.Toplevel):
         mycursor.execute(sql)
 
         mycursor.execute("commit")
+        
+        self.withdraw()
                 
 class MenuAdmin(tk.Toplevel):
     def __init__(self, parent):
@@ -234,11 +237,13 @@ class MenuAdmin(tk.Toplevel):
     def open_window2(self):
         window = FaceRecog(self)
         window.grab_set()
+        self.withdraw()
                          
     def open_window(self):
         window = InputID(self)
         window.grab_set()
-        
+        self.withdraw()
+
 class InputID(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
@@ -300,11 +305,12 @@ class InputID(tk.Toplevel):
         facerole.grid(row = 9,column = 1)
         #lambda: [self.open_window(), self.servo()]).pack(expand=True)
         
-        tk.Button(self,text='Submit', command= lambda: [self.open_window(), self.sendtoMySQL(), self.iconify()]).grid(row = 10,column = 1)
+        tk.Button(self,text='Submit', command= lambda: [self.open_window(), self.sendtoMySQL()]).grid(row = 10,column = 1)
 
     def open_window(self):
         window = InputWajah(self)
         window.grab_set()
+        self.withdraw()
         
     def sendtoMySQL(self):
         face_id = faceface.get()
@@ -403,9 +409,9 @@ class InputWajah(tk.Toplevel):
 
         
     def open_window(self):
-        self.destroy()
         window = TombolTrain(self)
         window.grab_set()
+        self.withdraw()
         
 class TombolTrain(tk.Toplevel):
     def __init__(self, parent):
@@ -422,21 +428,21 @@ class TombolTrain(tk.Toplevel):
         #c = Label(self, text = "Selesai Registrasi").grid(row = 2,column = 2)
         ttk.Button(self,
                 text='Selesaikan Registrasi',
-                command=lambda: [self.open_window(), self.open_window(), self.iconify()]).pack(expand=True)
+                command=lambda: [self.open_window(), self.open_window2()]).pack(expand=True)
 
         ttk.Button(self,
                 text='Tutup Aplikasi / Cancel',
                 command=lambda: [self.destroy()]).pack(expand=True)   
         
     def open_window(self):
-        self.destroy()
         window = TrainWajah(self)
         window.grab_set()
+        self.withdraw()
         
-    def open_window(self):
-        self.destroy()
+    def open_window2(self):
         window = FaceRecog(self)
         window.grab_set()
+        self.withdraw()
         
         
 class TrainWajah(tk.Toplevel):
