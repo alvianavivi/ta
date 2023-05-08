@@ -44,7 +44,7 @@ class App(tk.Tk):
         # place a button on the root window
         ttk.Button(self,
                 text='START', 
-                command=lambda: [self.open_window(), self.servo()]).pack(expand=True)                  
+                command=lambda: [self.open_window(), self.servo(), self.iconify()]).pack(expand=True)                  
             
     def open_window(self):
         window = FaceRecog(self)
@@ -209,7 +209,7 @@ class FaceRecog(tk.Toplevel):
 
         mycursor = mydb.cursor()
 
-        sql = "INSERT INTO akses_masuk (id_user, waktu) values ('"+ id_user +"','"+ waktumasuk +"')"
+        sql = "INSERT INTO akses_masuk (id_user, waktu_masuk) values ('"+ id_user +"','"+ waktumasuk +"')"
         mycursor.execute(sql)
 
         mycursor.execute("commit")
